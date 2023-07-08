@@ -2,6 +2,8 @@ defprotocol Subscriber do
   @fallback_to_any true
 
   def print_invoice(subscriber_type, calls, year, month)
+  def make_call(subscriber_type, time_spent, date)
+  def make_recharge(subscriber_type, value, date)
 end
 
 defmodule Telephony.Core.Subscriber do

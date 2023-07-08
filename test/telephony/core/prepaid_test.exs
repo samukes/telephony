@@ -3,16 +3,16 @@ defmodule Telephony.Core.PrepaidTest do
 
   use ExUnit.Case
 
-  alias Telephony.Core.{Call, Prepaid, Recharge, Subscriber}
+  alias Telephony.Core.{Call, Prepaid, Recharge}
 
   setup do
-    subscriber = %Subscriber{
+    subscriber = %Telephony.Core.Subscriber{
       full_name: "Samuel",
       phone_number: 123,
       subscriber_type: %Prepaid{credits: 10, recharges: []}
     }
 
-    subscriber_no_credits = %Subscriber{
+    subscriber_no_credits = %Telephony.Core.Subscriber{
       full_name: "Samuel",
       phone_number: 123,
       subscriber_type: %Prepaid{credits: 0, recharges: []}
@@ -27,7 +27,7 @@ defmodule Telephony.Core.PrepaidTest do
 
     result = Prepaid.make_call(subscriber, time_spent, date)
 
-    expect = %Subscriber{
+    expect = %Telephony.Core.Subscriber{
       full_name: "Samuel",
       phone_number: 123,
       subscriber_type: %Prepaid{credits: 7.1, recharges: []},
@@ -59,7 +59,7 @@ defmodule Telephony.Core.PrepaidTest do
 
     result = Prepaid.make_recharge(subscriber, value, date)
 
-    expect = %Subscriber{
+    expect = %Telephony.Core.Subscriber{
       full_name: "Samuel",
       phone_number: 123,
       subscriber_type: %Prepaid{
@@ -78,7 +78,7 @@ defmodule Telephony.Core.PrepaidTest do
     date = ~D[2023-06-26]
     last_month = ~D[2023-05-26]
 
-    subscriber = %Subscriber{
+    subscriber = %Telephony.Core.Subscriber{
       full_name: "Samuel",
       phone_number: 123,
       subscriber_type: %Prepaid{
@@ -109,7 +109,7 @@ defmodule Telephony.Core.PrepaidTest do
     calls = subscriber.calls
 
     assert(
-      Invoice.print(subscriber_type, calls, 2023, 05) == %{
+      Subscriber.print_invoice(subscriber_type, calls, 2023, 05) == %{
         calls: [
           %{
             time_spent: 20,
@@ -125,7 +125,8 @@ defmodule Telephony.Core.PrepaidTest do
         recharges: [
           %Recharge{value: 100, date: last_month},
           %Recharge{value: 100, date: last_month}
-        ]
+        ],
+        credits: 253.6
       }
     )
   end

@@ -1,3 +1,9 @@
+defprotocol Subscriber do
+  @fallback_to_any true
+
+  def print_invoice(subscriber_type, calls, year, month)
+end
+
 defmodule Telephony.Core.Subscriber do
   @moduledoc false
 

@@ -27,8 +27,21 @@ defmodule Telephony.Core.Subscriber do
 
   def make_call(subscriber, time_spent, date) do
     case Subscriber.make_call(subscriber.type, time_spent, date) do
-      {:error, message} -> {:error, message}
-      {type, call} -> %{subscriber | type: type, calls: subscriber.calls ++ call}
+      {:error, _} = error -> error
+      {type, call} -> %{subscriber | type: type, calls: subscriber.calls ++ [call]}
     end
+  end
+
+  def make_recharge(subscriber, value, date) do
+    case Subscriber.make_recharge(subscriber.type, value, date) do
+      {:error, _} = error -> error
+      type -> %{subscriber | type: type}
+    end
+  end
+
+  def print_invoice(subscriber, year, month) do
+    invoice = Subscriber.print_invoice(subscriber.type, subscriber.calls, year, month)
+
+    %{subscirber: subscriber, invoice: invoice}
   end
 end

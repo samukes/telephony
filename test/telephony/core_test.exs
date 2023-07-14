@@ -176,7 +176,7 @@ defmodule Telephony.CoreTest do
 
     expect = %{
       invoice: %{calls: [], credits: 0, recharges: []},
-      subscirber: %Subscriber{
+      subscriber: %Subscriber{
         full_name: "Samuel",
         phone_number: 123,
         type: %Prepaid{credits: 0, recharges: []},
@@ -214,7 +214,7 @@ defmodule Telephony.CoreTest do
     expect = [
       %{
         invoice: %{calls: [], credits: 5, recharges: []},
-        subscirber: %Subscriber{
+        subscriber: %Subscriber{
           full_name: "Samuel",
           phone_number: 123,
           type: %Prepaid{credits: 5, recharges: []},
@@ -223,7 +223,7 @@ defmodule Telephony.CoreTest do
       },
       %{
         invoice: %{calls: [], credits: 2.6, recharges: []},
-        subscirber: %Subscriber{
+        subscriber: %Subscriber{
           full_name: "Carlos",
           phone_number: 456,
           type: %Prepaid{credits: 2.6, recharges: []},
@@ -232,7 +232,7 @@ defmodule Telephony.CoreTest do
       },
       %{
         invoice: %{calls: [], value_spent: 0},
-        subscirber: %Subscriber{
+        subscriber: %Subscriber{
           full_name: "Arlete",
           phone_number: 789,
           type: %Postpaid{spent: 100},

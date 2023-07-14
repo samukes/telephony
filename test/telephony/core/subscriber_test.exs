@@ -135,7 +135,7 @@ defmodule Telephony.Core.SubscriberTest do
 
     assert %{
              invoice: %{calls: [], value_spent: 0},
-             subscirber: %Telephony.Core.Subscriber{
+             subscriber: %Telephony.Core.Subscriber{
                full_name: "Samuel",
                phone_number: 123,
                type: %Telephony.Core.Postpaid{spent: 0},
@@ -156,7 +156,7 @@ defmodule Telephony.Core.SubscriberTest do
 
     assert %{
              invoice: %{calls: [], credits: 100, recharges: []},
-             subscirber: %Telephony.Core.Subscriber{
+             subscriber: %Telephony.Core.Subscriber{
                calls: [],
                full_name: "Samuel",
                phone_number: 123,

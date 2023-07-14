@@ -42,6 +42,6 @@ defmodule Telephony.Core.Subscriber do
   def print_invoice(subscriber, year, month) do
     invoice = Subscriber.print_invoice(subscriber.type, subscriber.calls, year, month)
 
-    %{subscirber: subscriber, invoice: invoice}
+    %{subscriber: subscriber, invoice: invoice}
   end
 end

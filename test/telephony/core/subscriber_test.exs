@@ -3,9 +3,7 @@ defmodule Telephony.Core.SubscriberTest do
 
   use ExUnit.Case
 
-  alias Telephony.Core.Subscriber
-  alias Telephony.Core.Prepaid
-  alias Telephony.Core.Postpaid
+  alias Telephony.Core.{Call, Postpaid, Prepaid, Subscriber}
 
   test "create a prepaid subscriber" do
     # Given
@@ -44,5 +42,52 @@ defmodule Telephony.Core.SubscriberTest do
     }
 
     assert expect == result
+  end
+
+  test "make a prepaid call" do
+    subscriber = %Subscriber{
+      full_name: "Samuel",
+      phone_number: 123,
+      subscriber_type: %Prepaid{credits: 10, recharges: []}
+    }
+
+    date = Date.utc_today()
+
+    assert %Subscriber{
+             calls: %Call{time_spent: 1, date: date},
+             full_name: "Samuel",
+             phone_number: 123,
+             subscriber_type: %Prepaid{credits: 8.55, recharges: []}
+           } == Subscriber.make_call(subscriber, 1, date)
+  end
+
+  test "make a prepaid without call" do
+    subscriber = %Subscriber{
+      full_name: "Samuel",
+      phone_number: 123,
+      subscriber_type: %Prepaid{credits: 0, recharges: []}
+    }
+
+    date = Date.utc_today()
+
+    assert {:error, "Subscriber does not have credits"} ==
+             Subscriber.make_call(subscriber, 1, date)
+  end
+
+  test "make a postpaid call" do
+    subscriber = %Subscriber{
+      full_name: "Samuel",
+      phone_number: 123,
+      subscriber_type: %Postpaid{spent: 0}
+    }
+
+    date = Date.utc_today()
+
+    assert %Subscriber{
+             calls: %Call{time_spent: 1, date: date},
+             full_name: "Samuel",
+             phone_number: 123,
+             subscriber_type: %Postpaid{spent: 1.0}
+           } == Subscriber.make_call(subscriber, 1, date)
   end
 end

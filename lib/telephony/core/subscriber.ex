@@ -24,4 +24,11 @@ defmodule Telephony.Core.Subscriber do
 
     struct(__MODULE__, payload)
   end
+
+  def make_call(subscriber, time_spent, date) do
+    case Subscriber.make_call(subscriber.subscriber_type, time_spent, date) do
+      {:error, message} -> {:error, message}
+      {type, call} -> %{subscriber | subscriber_type: type, calls: subscriber.calls ++ call}
+    end
+  end
 end

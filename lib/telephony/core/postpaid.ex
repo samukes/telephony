@@ -29,19 +29,19 @@ defmodule Telephony.Core.Postpaid do
       end
     end
 
-    def make_call(subscriber_type, time_spent, date) do
-      subscriber_type
+    def make_call(type, time_spent, date) do
+      type
       |> update_spent(time_spent)
       |> add_call(time_spent, date)
     end
 
-    defp update_spent(subscriber_type, time_spent) do
+    defp update_spent(type, time_spent) do
       spent = @price_per_minute * time_spent
-      %{subscriber_type | spent: subscriber_type.spent + spent}
+      %{type | spent: type.spent + spent}
     end
 
-    defp add_call(subscriber_type, time_spent, date) do
-      {subscriber_type, Call.new(time_spent, date)}
+    defp add_call(type, time_spent, date) do
+      {type, Call.new(time_spent, date)}
     end
 
     def make_recharge(_, _, _), do: {:error, "Postpaid can't do a recharge"}

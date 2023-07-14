@@ -3,10 +3,10 @@ defmodule Telephony.Core do
 
   alias __MODULE__.Subscriber
 
-  @subscriber_types ~w(prepaid postpaid)a
+  @types ~w(prepaid postpaid)a
 
-  def create_subscribers(subscribers, %{subscriber_type: type} = payload)
-      when type in @subscriber_types do
+  def create_subscribers(subscribers, %{type: type} = payload)
+      when type in @types do
     case Enum.find(subscribers, &(&1.phone_number == payload.phone_number)) do
       nil -> subscribers ++ [Subscriber.new(payload)]
       subscriber -> {:error, "Subscriber `#{subscriber.phone_number}`, already exist"}

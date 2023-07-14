@@ -8,14 +8,14 @@ defmodule Telephony.CoreTest do
       %Subscriber{
         full_name: "Samuel",
         phone_number: 123,
-        subscriber_type: :prepaid
+        type: :prepaid
       }
     ]
 
     payload = %{
       full_name: "Samuel",
       phone_number: 123,
-      subscriber_type: :prepaid
+      type: :prepaid
     }
 
     %{subscribers: subscribers, payload: payload}
@@ -30,7 +30,7 @@ defmodule Telephony.CoreTest do
       %Subscriber{
         full_name: "Samuel",
         phone_number: 123,
-        subscriber_type: %Prepaid{credits: 0, recharges: []}
+        type: %Prepaid{credits: 0, recharges: []}
       }
     ]
 
@@ -41,7 +41,7 @@ defmodule Telephony.CoreTest do
     payload = %{
       full_name: "Carlos",
       phone_number: 1234,
-      subscriber_type: :prepaid
+      type: :prepaid
     }
 
     result = Core.create_subscribers(subscribers, payload)
@@ -50,12 +50,12 @@ defmodule Telephony.CoreTest do
       %Subscriber{
         full_name: "Samuel",
         phone_number: 123,
-        subscriber_type: :prepaid
+        type: :prepaid
       },
       %Subscriber{
         full_name: "Carlos",
         phone_number: 1234,
-        subscriber_type: %Prepaid{credits: 0, recharges: []}
+        type: %Prepaid{credits: 0, recharges: []}
       }
     ]
 
@@ -72,7 +72,7 @@ defmodule Telephony.CoreTest do
   end
 
   test "display error when subscriber type not accepted", %{payload: payload} do
-    payload = Map.put(payload, :subscriber_type, :anything)
+    payload = Map.put(payload, :type, :anything)
 
     result = Core.create_subscribers([], payload)
 
